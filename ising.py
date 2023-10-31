@@ -2,6 +2,7 @@ import numpy as np
 import scipy as sp
 import numba 
 
+# Lattice energy calculation
 def energy(spins, J, h):
     kern = [
         [False, True, False],
@@ -11,6 +12,7 @@ def energy(spins, J, h):
     conv = sp.signal.convolve2d(spins, kern, 'same')
     return - np.sum(J * spins * conv + h * spins)
 
+# A few steps of the Metropolis algorithm, accelerated with Numba
 @numba.njit(fastmath=True)
 def metropolis(N, spins, beta, J, h, E, iters=1_000):
     for _ in range(iters):
