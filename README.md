@@ -32,16 +32,16 @@ $$
 H = -\sum\limits_i h_i\sigma_i
 $$
 
-We may however heuristically introduce an interaction term that tends to align (or antialign) spins of neighbouring particles. We introduce it as follows, where $<ij>$ indicates the indices of nearest neighbours
+We may however heuristically introduce an interaction term that tends to align (or antialign) spins of neighbouring particles. We introduce it as follows, where $\langle ij\rangle$ indicates the indices of nearest neighbours
 
 $$
-H=-\left(\sum\limits_{<ij>}J_{ij}\sigma_i\sigma_j+ \sum\limits_i h_i\sigma_i\right)
+H=-\left(\sum\limits_{\langle ij\rangle}J_{ij}\sigma_i\sigma_j+ \sum\limits_i h_i\sigma_i\right)
 $$
 
 If we consider an isotropic system, we obtain the following:
 
 $$
-H=-\left(J\sum\limits_{<ij>}\sigma_i\sigma_j+ h\sum\limits_i\sigma_i\right)
+H=-\left(J\sum\limits_{\langle ij\rangle}\sigma_i\sigma_j+ h\sum\limits_i\sigma_i\right)
 $$
 
-Through multiple iterations, this programme calculates the system's evolution via the Metropolis algorithm, of which [Wikipedia](https://en.wikipedia.org/wiki/Ising_model#Metropolis_algorithm) gives a brief outline. The key consideration is that our system follows a Boltzmann distribution $\rho=\frac{1}{Z}e^{-\beta H}$. One can therefore calculate the total magnetic moment $m=-H/B$ as the system evolves (here we simply take $m=\sum\limits_i\sigma_i$). It is typical to express the total magnetic moment in terms of magnetisation per atom $M=m/N$, an intensive measurement, so this is what is presented here.
+Through multiple iterations, this programme calculates the system's evolution via the Metropolis algorithm, of which [Wikipedia](https://en.wikipedia.org/wiki/Ising_model#Metropolis_algorithm) gives a brief outline. The key consideration is that our system follows a Boltzmann distribution $\rho=\frac{1}{Z}e^{-\beta H}$. One can therefore calculate the total magnetic moment $m=-\frac{\partial H}{\partial B}$ as the system evolves (here we simply take $m=\sum\limits_i\sigma_i$). It is typical to express the total magnetic moment in terms of magnetisation per atom $M=m/N$, an intensive measurement, so this is what is presented here.
