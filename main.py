@@ -5,6 +5,7 @@ import matplotlib.colors as mcolors
 from matplotlib.widgets import Slider
 plt.style.use('fast')
 
+KTMIN, KTMAX = .1, 10
 HMAX = 10
 JMAX = 10
 
@@ -33,16 +34,16 @@ def init_fig():
     ax[1].set_xlabel('h')
     ax[1].set_ylabel('M', labelpad=-2)
     # Define the axes for the sliders [left, bottom, width, height]  
-    ax_beta_slider = plt.axes([.2, .15, .65, .03])
-    ax_h_slider = plt.axes([.2, .10, .65, .03])
-    ax_J_slider = plt.axes([.2, .05, .65, .03])
+    ax_kT_slider = plt.axes([.18, .15, .65, .03])
+    ax_J_slider = plt.axes([.18, .10, .65, .03])
+    ax_h_slider = plt.axes([.18, .05, .65, .03])
     # Create sliders for h and beta
-    h = Slider(ax_h_slider, 'h', - HMAX, HMAX, valinit=0)
-    beta = Slider(ax_beta_slider, r'$\beta$', 0.1, 5.0, valinit=.1)
+    kT = Slider(ax_kT_slider, 'kT', KTMIN, KTMAX, valinit=.1)
     J = Slider(ax_J_slider, 'J', - JMAX, JMAX, valinit=0)
-    return fig, ax, h, beta, J
+    h = Slider(ax_h_slider, 'h', - HMAX, HMAX, valinit=0)
+    return fig, ax, kT, J, h
 
-def animate(n, fig, ax, spins, h, beta, J):
+def animate(n, fig, ax, spins, kT, J, h):
     # Spin colourmap
     cmap = mcolors.ListedColormap(['red', 'blue'])
     bounds = [-1, 1, 2]
@@ -59,14 +60,14 @@ def animate(n, fig, ax, spins, h, beta, J):
     line.set_data(data)
     plt.pause(0.05)
     # Simulation/plot loop
-    spins, E = ising.metropolis(n, spins, beta.val, J.val, h.val, ising.energy(spins, J.val, h.val))
+    spins, E = ising.metropolis(n, spins, 1 / kT.val, J.val, h.val, ising.energy(spins, J.val, h.val))
     im.remove()
     im = ax[0].imshow(spins, cmap=cmap, norm=norm)
     data = np.hstack((data, [[h.val], [np.sum(spins) / n**2]]))
     line.set_data(data)
     plt.pause(0.05)
     while plt.fignum_exists(fig.number):
-        spins, E = ising.metropolis(n, spins, beta.val, J.val, h.val, E)
+        spins, E = ising.metropolis(n, spins, 1 / kT.val, J.val, h.val, E)
         im.remove()
         im = ax[0].imshow(spins, cmap=cmap, norm=norm)
         data = np.hstack((data, [[h.val], [np.sum(spins) / n**2]]))
@@ -84,7 +85,7 @@ if __name__ == '__main__':
     spins[idx > alpha] = -1
 
     # Simulation
-    fig, ax, h, beta, J = init_fig()
-    animate(n, fig, ax, spins, h, beta, J)
+    fig, ax, kT, J, h = init_fig()
+    animate(n, fig, ax, spins, kT, J, h)
 
     plt.show()

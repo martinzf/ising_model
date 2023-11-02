@@ -10,7 +10,7 @@ Numerical simulation of the most well known ferromagnet toy model. This programm
 1. Run the command `pip install -r requirements.txt` to install dependencies.
 Run the command `python main.py` (or `python3 main.py` if both Python 2 and Python 3 are installed on your computer).
 You will be prompted to input your desired lattice size and initial fraction of spins pointing up. Press enter after answering each prompt. A lattice size of around $50\times50$ points is recommended.
-1. The programme will open a Matplotlib window with sliders to modify the temperature ($1/\beta$), magnetic field ($h$) and spin coupling ($J$).
+1. The programme will open a Matplotlib window with sliders to modify the temperature ($kT$), magnetic field ($h$) and spin coupling ($J$).
 
 ### Theory
 
@@ -32,7 +32,7 @@ $$
 H = -\sum\limits_i h_i\sigma_i
 $$
 
-We may however heuristically introduce an interaction term that tends to align (or antialign) spins of neighbouring particles. We introduce it as follows, where $\langle ij\rangle$ indicates the indices of nearest neighbours
+We may however heuristically introduce an interaction term that tends to align (or antialign) spins of neighbouring particles. We introduce it as follows, where $\langle ij\rangle$ indicates the indices of nearest neighbours on the lattice
 
 $$
 H=-\left(\sum\limits_{\langle ij\rangle}J_{ij}\sigma_i\sigma_j+ \sum\limits_i h_i\sigma_i\right)
@@ -44,4 +44,4 @@ $$
 H=-\left(J\sum\limits_{\langle ij\rangle}\sigma_i\sigma_j+ h\sum\limits_i\sigma_i\right)
 $$
 
-Through multiple iterations, this programme calculates the system's evolution via the Metropolis algorithm, of which [Wikipedia](https://en.wikipedia.org/wiki/Ising_model#Metropolis_algorithm) gives a brief outline. The key consideration is that our system follows a Boltzmann distribution $\rho=\frac{1}{Z}e^{-\beta H}$. One can therefore calculate the total magnetic moment $m=-\frac{\partial H}{\partial B}$ as the system evolves (here we simply take $m=\sum\limits_i\sigma_i$). It is typical to express the total magnetic moment in terms of magnetisation per atom $M=m/N$, an intensive measurement, so this is what is presented here.
+Through multiple iterations, this programme calculates the system's evolution via the Metropolis algorithm, of which [Wikipedia](https://en.wikipedia.org/wiki/Ising_model#Metropolis_algorithm) gives a brief outline. The key consideration is that our system follows a Boltzmann distribution $\rho=\frac{1}{Z}e^{-\beta H}$. One can then calculate the total magnetic moment $m=-\frac{\partial H}{\partial B}$ as the system evolves (here we simply take $m=\sum\limits_i\sigma_i$). It is typical to express the total magnetic moment in terms of magnetisation per atom $M=m/N$, an intensive measurement, so this is what is presented here. I have also arbitrarily chosen to impose free boundary conditions for the simulation (spins don't interact with anything outside the grid), whereas I could have chosen periodic boundary conditions for instance.

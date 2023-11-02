@@ -24,17 +24,17 @@ def metropolis(n, spins, beta, J, h, E, iters=1_000):
         # Energy change
         spinspin_i, spinspin_f = 0, 0
         if x > 0:
-            spinspin_i -= spin_i * spins[x - 1, y]
-            spinspin_f -= spin_f * spins[x - 1, y]
+            spinspin_i += spin_i * spins[x - 1, y]
+            spinspin_f += spin_f * spins[x - 1, y]
         if x < n-1:
-            spinspin_i -= spin_i * spins[x + 1, y]
-            spinspin_f -= spin_f * spins[x + 1, y]
+            spinspin_i += spin_i * spins[x + 1, y]
+            spinspin_f += spin_f * spins[x + 1, y]
         if y > 0:
-            spinspin_i -= spin_i * spins[x, y - 1]
-            spinspin_f -= spin_f * spins[x, y - 1]
+            spinspin_i += spin_i * spins[x, y - 1]
+            spinspin_f += spin_f * spins[x, y - 1]
         if y < n-1:
-            spinspin_i -= spin_i * spins[x, y + 1]
-            spinspin_f -= spin_f * spins[x, y + 1]
+            spinspin_i += spin_i * spins[x, y + 1]
+            spinspin_f += spin_f * spins[x, y + 1]
         dE = - J * (spinspin_f - spinspin_i) - h * (spin_f - spin_i)
         # Change state
         if dE <= 0:
