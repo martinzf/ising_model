@@ -1,6 +1,6 @@
 # ISING MODEL 
 ### About
-Numerical simulation of the most well known ferromagnet toy model. This programme carries out a Monte Carlo simulation through the Metropolis algorithm.
+Python 3.11 numerical simulation of the most well known ferromagnet toy model. This programme carries out a Monte Carlo simulation through the Metropolis algorithm.
 
 ### Preview
 ![alt text](preview.png)
